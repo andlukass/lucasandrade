@@ -41,20 +41,18 @@ function Initial() {
         <div className="initial-action">
         <div className="custom-div-button" id="initial-whatsapp-button"><SiWhatsapp /><p>WhatsApp</p></div>
         <div className="custom-div-button" id="initial-linkedin-button"><SiLinkedin /><p>Linkedin</p></div>
-
-
-          {/* <a href="https://wa.me/+351920286831/" target="_blank">
-            <div className="custom-div-button" id="initial-whatsapp-button">
-              <SiWhatsapp />
-              <p>WhatsApp</p>
-            </div>
-          </a> */}
-          {/* <a href="https://www.linkedin.com/in/andlukas/" target="_blank">
-            <div className="custom-div-button" id="initial-linkedin-button">
-              <SiLinkedin />
-              <p>Linkedin</p>
-            </div>
-          </a> */}
+        <a href="https://wa.me/+351920286831/" target="_blank">
+          <div className="custom-div-button" id="initial-whatsapp-button">
+            <SiWhatsapp />
+            <p>WhatsApp</p>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/andlukas/" target="_blank">
+          <div className="custom-div-button" id="initial-linkedin-button">
+            <SiLinkedin />
+            <p>Linkedin</p>
+          </div>
+        </a>
         </div>
         <div className="arrow" style={{opacity: arrowDisplay, bottom: arrowPos}}>
           <FaAnglesDown size={50}/>
