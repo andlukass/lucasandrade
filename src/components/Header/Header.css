@@ -1,0 +1,41 @@
+.header{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1pt solid #e0e0e0;
+}
+@media (max-width: 500px) {
+    .header {
+        flex-direction: column;
+        padding-bottom: 20pt;
+    }
+}
+
+.header-name{
+    padding: 15pt;
+    font-size: 25pt;
+}
+
+.header-lang {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100pt;
+}
+
+.header-lang-option p {
+    margin-left: 3pt;
+}
+
+.header-lang-option:hover {
+    opacity: 0.5;
+}
+
+.header-lang-option {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    width: 45pt;
+}
