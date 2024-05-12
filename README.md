@@ -3,4 +3,4 @@
 Show case of a few personal projects :)
 
 visit in:
-[lucasandrade.dev](lucasandrade.dev)
+[lucasandrade.dev](https://lucasandrade.dev)
