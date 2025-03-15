@@ -23,7 +23,7 @@ const sendEmail = async (newJobs: {url: string, name: string}[]) => {
   await getFirestore().collection("mail").add(tempEmail);
 }
 
-const getJobsFromUrl = async (url: string, newJobs: {url: string, name: string}[], knownJobs: {name: string, url: string, date: Timestamp}[], limitDate: Date) => {
+const getJobsFromUrl = async (url: string, newJobs: {url: string, name: string}[], knownJobs: {name: string, url: string, date: Timestamp}[]) => {
   const { data: html } = await axios.get(url);
   const $ = load(html);
 
@@ -32,22 +32,19 @@ const getJobsFromUrl = async (url: string, newJobs: {url: string, name: string}[
   );
 
   jobElements.each((index, element) => {
+    void index;
     const jobTitle = $(element).find('span').first().text().trim();
     const jobLink = $(element).attr('href') || "url error";
 
-    const existingJob = knownJobs.find((item) => item.name === jobTitle);
-    console.log("exitingJob: ", existingJob)
-    const isNewListing = !existingJob || existingJob.date < Timestamp.fromDate(limitDate);
-    if (jobTitle.includes("Wannabe") && isNewListing) {
+    const existingJob = knownJobs.find((item) => item.url === jobLink);
+    if (jobTitle.includes("Wannabe") && !existingJob) {
         newJobs.push({url: jobLink, name: jobTitle});
     }
   });
 }
 
 export const getCriticalJobs = onSchedule("0 0 * * *", async (event) => {
-  const today = new Date();
-  const limitDate = new Date();
-  limitDate.setDate(today.getDate() - 60);
+  void event;
   const knownJobsRef = getFirestore().collection("logs").doc("criticalJobs");
   const knownJobs = ((await knownJobsRef.get()).data()?.jobs || []) as {name: string, url: string, date: Timestamp}[] ;
 
@@ -55,17 +52,17 @@ export const getCriticalJobs = onSchedule("0 0 * * *", async (event) => {
   for (let i = 1; i <= 3; i++) {
     const url = `https://join.criticaltechworks.com/jobs?page=${i}`;
     try {
-      await getJobsFromUrl(url, newJobs, knownJobs, limitDate);
-      console.log(`Founded jobs at the page ${i}: `, newJobs);
+      await getJobsFromUrl(url, newJobs, knownJobs);
     } catch (error) {
       if (error instanceof Error)console.log('Error getting url:' +  url);
     }
   }
-  console.log("knownJobs: ", knownJobs);
   newJobs.forEach((item)=>{knownJobs.push({name: item.name, url: item.url, date: Timestamp.now()})})
   await knownJobsRef.update({jobs: knownJobs});
   console.log("newJobs: ", newJobs);
 
-  if (newJobs.length) await sendEmail(newJobs);
+  if (newJobs.length) {
+    await sendEmail(newJobs);
+  }
   else console.log("nothing new found :(")
 });
