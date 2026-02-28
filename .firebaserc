@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "lucasandrade-5246f"
-  }
+  },
+  "targets": {
+    "lucasandrade-5246f": {
+      "hosting": {
+        "main": [
+          "lucasandrade-5246f"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
